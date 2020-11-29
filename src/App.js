@@ -4,11 +4,11 @@ import { bdd } from './firebase';
 
 function App() {
   const [libros, setlibros] = useState([])
-  const [autorAux,setautorAux]=useState('')
-  const [editorialAux,seteditorialAux]=useState('')
-  const [clasificacionAux,setclasificacionAux]=useState('')
-  const [idAux,setidAux]=useState('')
-  const [tituloAux,settituloAux]=useState('')
+  const [autorAux,setautorAux]=useState([])
+  const [editorialAux,seteditorialAux]=useState([])
+  const [clasificacionAux,setclasificacionAux]=useState([])
+  const [idAux,setidAux]=useState([])
+  const [tituloAux,settituloAux]=useState([])
   const [modoEditar,setmodoEditar]=useState(false)
   const [id,setid]=useState('')
 
@@ -32,7 +32,7 @@ function App() {
     seteditorialAux(item.EditorialBDD)
     setidAux(item.IdBDD)
     settituloAux(item.TituloBDD)
-    //setid(item.id)
+    setid(item.id)
   }
   const editarLibro=async(e)=>{
     e.preventDefault()
@@ -42,9 +42,14 @@ function App() {
       EditorialBDD:editorialAux,
       IdBDD:idAux,
       TituloBDD:tituloAux
+      
     })
-    
-
+    getLibros()
+    setautorAux("")
+    setclasificacionAux("")
+    seteditorialAux("")
+    setidAux("")
+    settituloAux("")
   }
 
 

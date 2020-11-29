@@ -1,0 +1,21 @@
+body {
+    background-color: lightblue;
+  }
+
+h1,h2,p {
+    font-family: 'Raleway', sans-serif;
+    
+}
+
+h1,h2{
+    text-align: center;
+}
+
+button{
+    margin:auto;
+    display:block;
+}
+
+span{
+    text-align:center;
+}

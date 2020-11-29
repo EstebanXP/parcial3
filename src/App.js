@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {useEffect,preventDefault} from 'react'
 import { bdd } from './firebase';
+import './diseño.css';
 
 function App() {
   const [libros, setlibros] = useState([])
@@ -52,6 +53,11 @@ function App() {
     settituloAux("")
   }
 
+  const eliminarLibro = async (id)=>{
+    await bdd.collection('Libros').doc(id).delete()
+    getLibros()
+
+  }
 
 
   const addLibros=async(e)=>{
@@ -89,28 +95,29 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Hola mundo!, ingresa un nuevo libro a la biblioteca: </h1>
-      <h2>El libro que estas ingresando es: </h2>
-      {autorAux} {clasificacionAux} {editorialAux} {idAux} {tituloAux} 
-      <h3>{modoEditar?'Editar': 'Agregar'}</h3>
+      <h1>Hola, Bienvenido a la biblioteca </h1>
+      <h2>Estas en modo: {modoEditar?'Editar': 'Agregar'}</h2>
+      <h3>El libro que estas ingresando es:  </h3>
+      {tituloAux} {autorAux} {clasificacionAux} {editorialAux} {idAux} 
       <form onSubmit={modoEditar ? editarLibro : addLibros }>
           <div className="form-group">
-        <label></label>  
+        <label></label> 
+        <br></br>
+            <p>Titulo del libro: {tituloAux} </p>
+            <input type="text" className="form-control" value={tituloAux} onChange={e=>settituloAux(e.target.value)} placeholder="Ej. El libro vaquero" required/> 
             <br></br>
-            Autor:
+            <p>Autor: {autorAux}</p>
             <input type="text" className="form-control" value={autorAux} onChange={e=>setautorAux(e.target.value)} placeholder="Ej. Oscar Wilde" required/>
             <br></br>
-            Clasificacion:
+            <p>Clasificacion: {clasificacionAux}</p>
             <input type="text" className="form-control" value={clasificacionAux} onChange={e=>setclasificacionAux(e.target.value)} placeholder="Ej. B" required />
             <br></br>
-            Editorial:
+            <p>Editorial: {editorialAux}</p>
             <input type="text" className="form-control" value={editorialAux} onChange={e=>seteditorialAux(e.target.value)} placeholder="Ej. Editorial Alianza" required/>
             <br></br>
-            ID del libro:
+            <p>ID del libro: {idAux}</p>
             <input type="text" className="form-control" value={idAux} onChange={e=>setidAux(e.target.value)} placeholder="Ej. 32424" required/>
-            <br></br>
-            Titulo del libro: 
-            <input type="text" className="form-control" value={tituloAux} onChange={e=>settituloAux(e.target.value)} placeholder="Ej. El libro vaquero" required/>
+
           </div>
           { <button type="submit" className="btn btn-success">Agregar Libro</button> }
       </form>  
@@ -122,12 +129,14 @@ function App() {
           {
             libros.map(item=>(
               <li className="list-group-item" key={item.id}>
-                <span>{item.AutorBDD}</span>
-                <span>{item.EditorialBDD}</span>
-                <span>{item.IdBDD}</span>
-                <span>{item.TituloBDD}</span>
-                <span>{item.ClasificacionBDD}</span>
-                <button className="btn btn-danger btn-small float-right"> Eliminar libro </button>
+                <span>{item.AutorBDD+" "}</span>
+                <span>{item.EditorialBDD+" "}</span>
+                <span>{item.IdBDD+" " }</span>
+                <span>{item.TituloBDD+" " }</span>
+                <span>{item.ClasificacionBDD+" "}</span>
+                <button className="btn btn-danger btn-small float-right"
+                onClick={()=>eliminarLibro(item.id)}
+                > Eliminar libro </button>
                 <button className="btn btn-warning btn-small float-right mr-2" 
                 onClick={()=>activarEdicion(item)}> Editar libro 
                 </button>

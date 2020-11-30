@@ -51,10 +51,13 @@ function App() {
     seteditorialAux("")
     setidAux("")
     settituloAux("")
+    alert("Libro editado!");
+    
   }
 
   const eliminarLibro = async (id)=>{
-    await bdd.collection('Libros').doc(id).delete()
+    await bdd.collection('Libros').doc(id).delete() 
+    alert("Libro eliminado!");
     getLibros()
 
   }
@@ -86,7 +89,7 @@ function App() {
     seteditorialAux("")
     setidAux("")
     settituloAux("")
-
+    alert("Libro agregado!");
   }
 
   
